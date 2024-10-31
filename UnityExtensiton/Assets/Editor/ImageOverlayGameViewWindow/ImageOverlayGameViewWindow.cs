@@ -203,6 +203,7 @@ public class ImageOverlapGameViewWindow : EditorWindow
             GUILayout.Space(height + 50);
             GUILayout.TextField("透明度設定");
             imageAlpha = GUILayout.HorizontalSlider(imageAlpha, 0, 1);
+            GUILayout.Space(20);
         }
         isSnapWindow = GUILayout.Toggle(isSnapWindow, "画面にくっつけるかどうか");
         GUILayout.TextField("読み込みはPNGのみ対応 GameWindowを必ず開いておいてください");
