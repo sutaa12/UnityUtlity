@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Reflection;
 using UnityEditor;
@@ -75,10 +75,11 @@ public class ImageOverlapGameViewWindow : EditorWindow
         {
             return null;
         }
+        
 
         var t = System.Type.GetType("UnityEditor.GameView,UnityEditor");
         if (t == null) return null;
-        var renderTexture = t.GetField("m_TargetTexture",
+        var renderTexture = t.GetField("m_RenderTexture",
             BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField | BindingFlags.FlattenHierarchy |
             BindingFlags.SetField);
         if (renderTexture == null)
@@ -92,9 +93,10 @@ public class ImageOverlapGameViewWindow : EditorWindow
 
     public static EditorWindow GetMainGameView()
     {
-        var t = System.Type.GetType("UnityEditor.GameView,UnityEditor");
+        PlayModeWindow.SetViewType(PlayModeWindow.PlayModeViewTypes.GameView);
+        var t = System.Type.GetType("UnityEditor.PlayModeView,UnityEditor");
         if (t == null) return null;
-        var getMainGameView = t.GetMethod("GetMainGameView", BindingFlags.NonPublic | BindingFlags.Static);
+        var getMainGameView = t.GetMethod("GetMainPlayModeView", BindingFlags.NonPublic | BindingFlags.Static);
         if (getMainGameView == null) return null;
         var res = getMainGameView.Invoke(null, null) ?? GetWindow(t);
         return (EditorWindow)res;
